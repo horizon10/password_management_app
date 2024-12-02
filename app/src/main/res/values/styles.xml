@@ -1,0 +1,16 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Genel Arka Plan Rengi -->
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textColorHint">@color/backgroundColor</item>
+        <!-- Buton ve TextView için Genel Stil -->
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <!-- Buton için Özel Stil -->
+    <style name="CustomButtonStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">16sp</item>
+      </style>
+</resources>

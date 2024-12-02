@@ -1,0 +1,30 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:backgroundTint="#808080"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <!-- Yeni Şifre Ekle Butonu -->
+    <Button
+        android:id="@+id/addPasswordButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Yeni Şifre Ekle"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:padding="14dp"
+        android:backgroundTint="#7CB8E0"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Şifre Listesi -->
+        <ListView
+        android:id="@+id/passwordListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:dividerHeight="1dp"
+        android:background="@android:color/white" />
+</LinearLayout>

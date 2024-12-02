@@ -1,0 +1,11 @@
+<resources>
+    <!-- Temel Renkler -->
+    <color name="black">#000000</color> <!-- Siyah renk -->
+    <color name="white">#FFFFFF</color> <!-- Beyaz renk -->
+
+    <!-- Diğer Renkler -->
+    <color name="hintColor">#7f8c8d</color> <!-- Açık gri renk, hint metinleri için -->
+    <color name="primaryColor">#3498db</color> <!-- Mavi renk -->
+    <color name="secondaryColor">#2c3e50</color> <!-- Koyu gri renk -->
+    <color name="backgroundColor">#1d1f20</color> <!-- Koyu arka plan rengi -->
+</resources>
