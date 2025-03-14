@@ -19,8 +19,8 @@
 
 <h2>Screenshots</h2>
 <hr>
-<p><img src="[https://github.com/horizon10/Password_management_app/blob/master/screenshot1.jpg](https://github.com/horizon10/password_management_app/blob/master/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-03-14%20170217.png)" alt=""></p>
-<p><img src="[https://github.com/horizon10/Password_management_app/blob/master/screenshot2.jpg](https://github.com/horizon10/password_management_app/blob/master/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-03-14%20170141.png)" alt=""></p>
+<p><img src="Ekran görüntüsü 2025-03-14 170217.png" alt=""></p>
+<p><img src="Ekran görüntüsü 2025-03-14 170141.png" alt=""></p>
 
 <h5>Steps</h5>
 <ul>
