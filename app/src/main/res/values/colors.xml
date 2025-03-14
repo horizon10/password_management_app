@@ -1,11 +1,31 @@
 <resources>
-    <!-- Temel Renkler -->
-    <color name="black">#000000</color> <!-- Siyah renk -->
-    <color name="white">#FFFFFF</color> <!-- Beyaz renk -->
+    <!-- Common Colors -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 
-    <!-- Diğer Renkler -->
-    <color name="hintColor">#7f8c8d</color> <!-- Açık gri renk, hint metinleri için -->
-    <color name="primaryColor">#3498db</color> <!-- Mavi renk -->
-    <color name="secondaryColor">#2c3e50</color> <!-- Koyu gri renk -->
-    <color name="backgroundColor">#1d1f20</color> <!-- Koyu arka plan rengi -->
+    <!-- Light Theme Colors -->
+    <color name="light_background">#F8F9FA</color>
+    <color name="light_surface">#FFFFFF</color>
+    <color name="light_primary">#3498DB</color>
+    <color name="light_primary_variant">#2980B9</color>
+    <color name="light_secondary">#2C3E50</color>
+    <color name="light_on_background">#212529</color>
+    <color name="light_on_surface">#212529</color>
+    <color name="light_on_primary">#FFFFFF</color>
+    <color name="light_on_secondary">#FFFFFF</color>
+    <color name="light_hint">#7F8C8D</color>
+    <color name="light_card_stroke">#E0E0E0</color>
+
+    <!-- Dark Theme Colors -->
+    <color name="dark_background">#1D1F20</color>
+    <color name="dark_surface">#2D3436</color>
+    <color name="dark_primary">#3498DB</color>
+    <color name="dark_primary_variant">#2980B9</color>
+    <color name="dark_secondary">#34495E</color>
+    <color name="dark_on_background">#ECEFF1</color>
+    <color name="dark_on_surface">#ECEFF1</color>
+    <color name="dark_on_primary">#FFFFFF</color>
+    <color name="dark_on_secondary">#FFFFFF</color>
+    <color name="dark_hint">#95A5A6</color>
+    <color name="dark_card_stroke">#3D4852</color>
 </resources>

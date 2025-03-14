@@ -1,9 +1,40 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.KotlinPassApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.KotlinPassApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Renk özellikleri -->
+        <item name="colorPrimary">@color/light_primary</item>
+        <item name="colorPrimaryVariant">@color/light_primary_variant</item>
+        <item name="colorSecondary">@color/light_secondary</item>
+        <item name="android:colorBackground">@color/light_background</item>
+        <item name="colorSurface">@color/dark_on_surface</item>
+        <item name="colorOnPrimary">@color/light_on_primary</item>
+        <item name="colorOnSecondary">@color/light_on_secondary</item>
+        <item name="colorOnBackground">@color/light_on_background</item>
+        <item name="colorOnSurface">@color/light_on_surface</item>
+        <item name="android:statusBarColor">@color/light_primary</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/light_background</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+
+        <!-- Yazı tipi özellikleri -->
+        <item name="android:textColorHint">@color/light_hint</item>
+        <item name="fontFamily">sans-serif</item>
     </style>
 
-    <style name="Theme.KotlinPassApp" parent="Base.Theme.KotlinPassApp" />
+    <!-- SearchView Özel Stili -->
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorHint">@color/light_hint</item>
+        <item name="android:textColor">@color/light_on_surface</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
+
+    <!-- CardView Özel Stili -->
+    <style name="CardViewStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/light_surface</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="strokeColor">@color/light_card_stroke</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
 </resources>

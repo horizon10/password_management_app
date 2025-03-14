@@ -3,11 +3,15 @@ package com.example.kotlinpassapp
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.Settings
+import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import com.example.kotlinpassapp.databinding.ActivityLoginBinding
+import com.example.kotlinpassapp.databinding.DialogChangePasswordBinding
 
 class LoginActivity : AppCompatActivity() {
 
@@ -16,10 +20,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var sharedPreferences: SharedPreferences
 
-    private var isChangePasswordRequested = false // Şifre değiştirme isteği için bayrak
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         // View Binding ile layout'u bağla
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -30,37 +33,18 @@ class LoginActivity : AppCompatActivity() {
         // Parmak izi doğrulama ayarlarını başlat
         setupBiometricAuthentication()
 
-        // Parmak izi ile giriş butonuna tıklanabilirlik ekle
+        // Parmak izi ikonu tıklanma olayı
         binding.biometricButton.setOnClickListener {
             biometricPrompt.authenticate(promptInfo)
         }
 
-        // Şifre ile giriş butonuna tıklanabilirlik ekle
+        // Şifre ikonu tıklanma olayı
         binding.passwordButton.setOnClickListener {
-            val inputPassword = binding.passwordEditText.text.toString()
-            val savedPassword = sharedPreferences.getString("user_password", null)
-
-            if (savedPassword == null) {
-                // Eğer henüz şifre tanımlanmadıysa, kullanıcının şifre belirlemesine izin ver
-                sharedPreferences.edit().putString("user_password", inputPassword).apply()
-                Toast.makeText(this, "Şifre oluşturuldu!", Toast.LENGTH_SHORT).show()
-                goToPasswordListActivity()
-            } else if (inputPassword == savedPassword) {
-                // Mevcut şifre doğru ise giriş yap
-                goToPasswordListActivity()
-            } else {
-                // Yanlış şifre
-                Toast.makeText(this, "Yanlış şifre!", Toast.LENGTH_SHORT).show()
-            }
+            startActivity(Intent(this, PasswordLoginActivity::class.java))
         }
 
-        // Şifre değiştirme butonuna tıklanabilirlik ekle
-        binding.changePasswordButton.setOnClickListener {
-            isChangePasswordRequested = true // Şifre değiştirme isteği başlatılıyor
-            biometricPrompt.authenticate(promptInfo)
-        }
 
-        // Uygulama ilk açıldığında otomatik olarak parmak izi doğrulaması başlatılacak
+        // Uygulama açıldığında otomatik parmak izi doğrulaması başlat
         biometricPrompt.authenticate(promptInfo)
     }
 
@@ -71,15 +55,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
                 Toast.makeText(applicationContext, "Doğrulama başarılı!", Toast.LENGTH_SHORT).show()
-
-                // Şifre değiştirme isteği varsa şifre değiştirme ekranına yönlendir
-                if (isChangePasswordRequested) {
-                    isChangePasswordRequested = false // Bayrağı sıfırla
-                    showChangePasswordDialog()
-                } else {
-                    // Aksi halde şifre listesi ekranına yönlendir
-                    goToPasswordListActivity()
-                }
+                goToPasswordListActivity()
             }
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
@@ -96,14 +72,81 @@ class LoginActivity : AppCompatActivity() {
         promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle("Parmak İzi ile Giriş")
             .setSubtitle("Kimliğinizi doğrulamak için parmak izinizi kullanın")
-            .setNegativeButtonText("Şifre ile Giriş Yap")
+            .setNegativeButtonText("İptal")
             .build()
     }
 
+    private fun authenticateForPasswordChange() {
+        val executor = ContextCompat.getMainExecutor(this)
+
+        val passwordChangePrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                // Başarılı doğrulama sonrası şifre değiştirme modalını göster
+                showChangePasswordDialog()
+            }
+
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                Toast.makeText(applicationContext, "Doğrulama hatası: $errString", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                Toast.makeText(applicationContext, "Doğrulama başarısız. Tekrar deneyin.", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        val passwordChangePromptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Şifre Değiştirme")
+            .setSubtitle("Şifre değiştirmek için kimliğinizi doğrulayın")
+            .setNegativeButtonText("İptal")
+            .build()
+
+        passwordChangePrompt.authenticate(passwordChangePromptInfo)
+    }
+
     private fun showChangePasswordDialog() {
-        // Şifre değiştirme için yeni bir Activity başlatılır
-        val intent = Intent(this, ChangePasswordActivity::class.java)
-        startActivity(intent)
+        // Dialog için binding oluştur
+        val dialogBinding = DialogChangePasswordBinding.inflate(LayoutInflater.from(this))
+
+        // AlertDialog oluştur
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
+            .setCancelable(true)
+            .create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // Dialog butonlarını ayarla
+        dialogBinding.saveNewPasswordButton.setOnClickListener {
+            val newPassword = dialogBinding.newPasswordEditText.text.toString()
+            val confirmPassword = dialogBinding.confirmPasswordEditText.text.toString()
+
+            when {
+                newPassword.isEmpty() -> {
+                    dialogBinding.newPasswordEditText.error = "Şifre boş olamaz!"
+                }
+                confirmPassword.isEmpty() -> {
+                    dialogBinding.confirmPasswordEditText.error = "Şifreyi doğrulayın!"
+                }
+                newPassword != confirmPassword -> {
+                    dialogBinding.confirmPasswordEditText.error = "Şifreler eşleşmiyor!"
+                }
+                else -> {
+                    // Şifreyi kaydet
+                    sharedPreferences.edit().putString("user_password", newPassword).apply()
+                    Toast.makeText(this, "Şifre başarıyla değiştirildi!", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }
+            }
+        }
+
+        dialogBinding.cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // Modalı göster
+        dialog.show()
     }
 
     private fun goToPasswordListActivity() {

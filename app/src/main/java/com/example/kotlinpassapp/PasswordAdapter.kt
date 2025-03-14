@@ -1,7 +1,9 @@
 package com.example.kotlinpassapp
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinpassapp.databinding.ItemPasswordBinding
 import java.util.Locale
@@ -10,6 +12,13 @@ class PasswordAdapter(
     private var passwords: MutableList<Password>, // MutableList kullanıyoruz, çünkü listeyi güncelleyeceğiz
     private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<PasswordAdapter.PasswordViewHolder>() {
+
+    private var itemTouchHelper: ItemTouchHelper? = null
+
+    // ItemTouchHelper'ı setter kullanarak atamak için
+    fun setItemTouchHelper(touchHelper: ItemTouchHelper) {
+        this.itemTouchHelper = touchHelper
+    }
 
     inner class PasswordViewHolder(val binding: ItemPasswordBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -39,6 +48,15 @@ class PasswordAdapter(
             // Butonlara tıklama işlemleri
             deleteButton.setOnClickListener { listener.onDeleteClick(password) }
             updateButton.setOnClickListener { listener.onUpdateClick(password) }
+
+            // Sürükleme tutamaç alanı için (Bu alanı layout'unuza eklemelisiniz)
+            // Örnek olarak bir ImageView (dragHandle) ekleyebilirsiniz
+            dragHandle.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    itemTouchHelper?.startDrag(holder)
+                }
+                false
+            }
         }
     }
 
@@ -62,12 +80,24 @@ class PasswordAdapter(
 
 
         return when (cleanedAppName) {
+            "eimza"->R.drawable.eimza_logo
             "ziraatbankasi" -> R.drawable.zb_amblem
             "yapikredi" -> R.drawable.yk_amblem
             "nays" -> R.drawable.nays_logo
             "papara" -> R.drawable.papara_logo
             "paycell" -> R.drawable.paycell_logo
             "isbankasi" -> R.drawable.is_logo
+            "kuveytturk"->R.drawable.kuveytturk_logo
+            "halkbank"->R.drawable.halkbank_logo
+            "garantibbva"->R.drawable.garanti_bbva_logo
+            "akbank"->R.drawable.akbank_logo
+            "qnbfinansbank"->R.drawable.qnb_logo
+            "ing"->R.drawable.ing_logo
+            "denizbank"->R.drawable.denizbank_logo
+            "teb"->R.drawable.teb_logo
+            "vakifbank"->R.drawable.vakifbank_logo
+            "albarakaturk"->R.drawable.albaraka_logo
+            "enpara"->R.drawable.enparalogo
             "discord" -> R.drawable.discord_logo
             "aliexpress" -> R.drawable.aliexpress_logo
             "amazon" -> R.drawable.amazon_logo

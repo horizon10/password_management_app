@@ -5,6 +5,8 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <!-- strings.xml dosyasına eklenecek açıklama -->
+    <string name="accessibility_service_description">Bu servis, banka uygulamalarında şifre alanlarını otomatik olarak doldurmak için kullanılır. Kopyala-yapıştıra izin vermeyen uygulamalarda şifreleri sizin için otomatik doldurur.</string>
     <string-array name="account_types">
         <item>Normal Uygulama</item>
         <item>Banka Uygulaması</item>
